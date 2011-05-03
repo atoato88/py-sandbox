@@ -23,7 +23,7 @@ def parse(html_source):
 
 def get_meaning(word):
 	h = httplib.HTTPConnection("eow.alc.co.jp")
-	#maybe, eijiro reject user-agent by python httplib. so, change user-agent value.
+	#maybe, eijiro rejects user-agent by python httplib. so, change user-agent value.
 	h.request('GET', '/%s/UTF-8' % urllib.quote(word.encode('utf-8')), None, {'User-Agent':'Mozilla'})
 	r = h.getresponse()
 	data = None
@@ -34,24 +34,3 @@ def get_meaning(word):
 
 print get_meaning(u"sample")
 
-"""
-word = sys.argv[1]
-
-h = httplib.HTTPConnection("eow.alc.co.jp")
-#maybe, eijiro reject user-agent by python httplib. so, change user-agent value.
-h.request("GET", "/%s/UTF-8" % word, None, {"User-Agent":"Mozilla"})
-r = h.getresponse()
-if r.status == httplib.OK:
-	data = r.read()
-	#print data
-	xRoot = lxml.html.fromstring(data)
-	wordclass = '//div[@id="resultsList"]//li[1]//span[@class="wordclass"]/text()'
-	meaning = '//div[@id="resultsList"]//li[1]//ol/li/text()'
-	#meaning = '//div[@id="resultsList"]//li[1]//ol[%s]/li[1]/text()' % str(1)
-	d = xRoot.xpath(wordclass)
-	print "-----" + word + "-----"
-	print "".join(d)
-	d = xRoot.xpath(meaning)
-	print "".join(d)
-	print getMeaning("hoge")
-"""
